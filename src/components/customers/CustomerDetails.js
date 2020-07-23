@@ -44,7 +44,7 @@ const CustomerDetail = ({id}) => {
             <div>{customer.state}</div>
             <div>{customer.date}</div>
 
-            <ModalEditCustomer />
+            <ModalEditCustomer/>
             
         </div>
     );
