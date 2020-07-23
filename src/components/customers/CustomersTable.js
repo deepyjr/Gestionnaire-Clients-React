@@ -16,11 +16,10 @@ React.useEffect( ()=>{
     const getCustomers = () => {
         axios({
             method:'GET',
-            url:'http://192.168.8.153:4000/customers',
+            url:'http://emt.arcplex.fr:4000/customers',
             headers: { 'Authorization' : 'Bearer ' + authState.token}
         })
         .then((res) => {
-            console.log('test')
             setCustomers(res.data)
         })
         .catch((err)=>{

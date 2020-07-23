@@ -6,7 +6,7 @@ export default function Dashboard(){
         <div>
             <React.Fragment>
                 <Container maxWidth="lg">
-                <h2>Dashboard</h2>
+                <h1>Dashboard</h1>
                 </Container>
             </React.Fragment>
         </div>
