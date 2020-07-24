@@ -49,11 +49,11 @@ export default function CustomerEdit(props) {
     const { authState } = React.useContext(AuthContext);
     const { customerState } = React.useContext(CustomerContext);
     
-    const [customer, setCustomer ] = React.useState(customerState.selectedCustomer);
+    const [customer, setCustomer ] = React.useState('');
     const [submit, setSubmit ] = React.useState(false);
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
-    console.log(customer);
+    // console.log(customer);
     const handleOpen = () => {
       setOpen(true);
     };
@@ -61,6 +61,12 @@ export default function CustomerEdit(props) {
     const handleClose = () => {
       setOpen(false);
     };
+
+    React.useEffect(() => {
+      setCustomer(
+      customerState.selectedCustomer
+      )
+      }, [customerState])
 
     React.useEffect( ()=>{
       const updateUser = () => {
