@@ -48,6 +48,7 @@ export default function CustomerEdit(props) {
 
     const { authState } = React.useContext(AuthContext);
     const { customerState } = React.useContext(CustomerContext);
+    const { customerDispatch } = React.useContext(CustomerContext);
     
     const [customer, setCustomer ] = React.useState('');
     const [submit, setSubmit ] = React.useState(false);
@@ -77,7 +78,10 @@ export default function CustomerEdit(props) {
               data:customer
           })
           .then((res) => {
-              console.log(res, 'test')
+              console.log(res)
+              customerDispatch({type:'selected',payload:res.data})
+              props.action()
+
           })
           .catch((err)=>{
               console.log(err, props.id)
@@ -88,6 +92,7 @@ export default function CustomerEdit(props) {
           updateUser()
           setSubmit(false)
           handleClose()
+          
       }
   }, [submit, customer])
 return (

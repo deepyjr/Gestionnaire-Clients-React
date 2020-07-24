@@ -7,10 +7,8 @@ import {CustomerContext} from '../../store/CustomerContext';
 
 const CustomerDetail = ({id}) => {
     const { authState } = React.useContext(AuthContext);
-    const [customer, setCustomer] = React.useState('')
     const [refreshDetails,setRefreshDetails] = React.useState(true);
-    const { customerDispatch } = React.useContext(CustomerContext);
-
+    const { customerState } = React.useContext(CustomerContext);
 
     React.useEffect( ()=>{
         const getCustomerDetail = () => {
@@ -18,10 +16,6 @@ const CustomerDetail = ({id}) => {
                 method:'GET',
                 url:'http://emt.arcplex.fr:4000/customers/'+id,
                 headers: { 'Authorization' : 'Bearer ' + authState.token}
-            })
-            .then((res) => {
-                customerDispatch({type:'selected',payload:res.data})
-                setCustomer(res.data)
             })
             .catch((err)=>{
                 console.log(err)
@@ -33,16 +27,19 @@ const CustomerDetail = ({id}) => {
             setRefreshDetails(false)
         }
     
-    },[authState.token])
+    },[authState.token]);
+
+    
+
     return (
         <div>
 
             <h1>Customer Details</h1>
-            <h2>{customer.name}</h2>
-            <div>{customer.company}</div>
-            <div>{customer.city}</div>
-            <div>{customer.state}</div>
-            <div>{customer.date}</div>
+            <h2>{customerState.selectedCustomer.name}</h2>
+            <div>{customerState.selectedCustomer.company}</div>
+            <div>{customerState.selectedCustomer.city}</div>
+            <div>{customerState.selectedCustomer.state}</div>
+            <div>{customerState.selectedCustomer.date}</div>
 
             <ModalEditCustomer/>
             
