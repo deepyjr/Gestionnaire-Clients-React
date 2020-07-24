@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import {AuthContext} from '../../store/AuthContext';
 import {CustomerContext} from '../../store/CustomerContext';
-
+import ModalDeleteCustomer from './ModalDeleteCustomer';
 
 function getModalStyle() {
     return {
@@ -19,13 +19,28 @@ function getModalStyle() {
     }
     
     const useStyles = makeStyles((theme) => ({
+      textField: {
+        float: 'center',
+        paddingBottom: 15,
+        width: '100%',
+        clear: 'both',
+      },
       paper: {
         position: 'absolute',
         width: 400,
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        padding: theme.spacing(2, 2, 3),
+        outline: 'none',
       },
+      button: {
+        float: 'left',
+        width: '100%',
+      },
+      title: {
+        textAlign: "left",
+        float: "left",
+      }
     }));
 
 export default function CustomerEdit(props) {
@@ -38,7 +53,7 @@ export default function CustomerEdit(props) {
     const [submit, setSubmit ] = React.useState(false);
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
-  
+    console.log(customer);
     const handleOpen = () => {
       setOpen(true);
     };
@@ -46,10 +61,9 @@ export default function CustomerEdit(props) {
     const handleClose = () => {
       setOpen(false);
     };
-  
-    console.log(customer)
+
     React.useEffect( ()=>{
-      const loginUser = () => {
+      const updateUser = () => {
           axios({
               method:'post',
               url:'http://emt.arcplex.fr:4000/customers/update/'+ customer._id,
@@ -65,8 +79,9 @@ export default function CustomerEdit(props) {
       }
   
       if(submit){
-          loginUser()
+          updateUser()
           setSubmit(false)
+          handleClose()
       }
   }, [submit, customer])
 return (
@@ -80,36 +95,38 @@ return (
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div style={modalStyle} className={classes.paper}>
-        <h2 id="simple-modal-title">Edit</h2>
-            <form className={classes.root} noValidate autoComplete="off" onSubmit={ e => {
-                e.preventDefault();
-                setSubmit(true);
-            }}>
+      <div style={modalStyle} className={classes.paper}>
+      <h2 id="simple-modal-title" className={classes.title}>Edit Customer</h2>
+      <ModalDeleteCustomer/>
 
-      <TextField id="name" label="Name" variant="outlined" value={customer.name || ''}
-      onChange={e => setCustomer({...customer, name: e.target.value})}
-      />
-      <TextField id="company" label="Company" variant="outlined" value={customer.company || ''}
-      onChange={e => setCustomer({...customer, company: e.target.value})}
-      />
-      <TextField id="city" label="City" variant="outlined" value={customer.city || ''}
-      onChange={e => setCustomer({...customer, city: e.target.value})} 
-      />
-      <TextField id="state" label="state" variant="outlined" value={customer.state || ''}
-      onChange={e => setCustomer({...customer, state: e.target.value})} 
-      />
-      <TextField id="date" label="date" variant="outlined" value={customer.date || ''}
-      onChange={e => setCustomer({...customer, date: e.target.value})} 
-      />
-      
-      <Button variant="contained" color="primary" type="submit">
-        Edit
-      </Button>
-      </form>
+      <form className={classes.root} noValidate autoComplete="off" onSubmit={ e => {
+          e.preventDefault();
+          setSubmit(true);
+      }}>
+    
+        <TextField id="name" label="Name" className={classes.textField} variant="outlined" value={customer.name || ''}
+        onChange={e => setCustomer({...customer, name: e.target.value})}
+        />
+        <TextField id="company" label="Company" className={classes.textField} variant="outlined" value={customer.company || ''}
+        onChange={e => setCustomer({...customer, company: e.target.value})}
+        />
+        <TextField id="city" label="City" className={classes.textField} variant="outlined" value={customer.city || ''}
+        onChange={e => setCustomer({...customer, city: e.target.value})} 
+        />
+        <TextField id="state" label="state" className={classes.textField} variant="outlined" value={customer.state || ''}
+        onChange={e => setCustomer({...customer, state: e.target.value})} 
+        />
+        <TextField id="date" label="date" className={classes.textField} variant="outlined" value={customer.date || ''}
+        onChange={e => setCustomer({...customer, date: e.target.value})} 
+        />
         
-      </div>
-      </Modal>
+        <Button className={classes.button} variant="contained" color="primary" type="submit">
+          Edit
+        </Button>
+      </form>
+      
     </div>
-  );
+    </Modal>
+  </div>
+);
 }
