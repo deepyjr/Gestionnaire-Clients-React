@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, formatMs } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import FormsCreateCustomer from './FormsCreateCustomer';
 import Button from '@material-ui/core/Button';
@@ -9,6 +9,7 @@ import axios from 'axios';
 import {AuthContext} from '../../store/AuthContext';
 import {CustomerContext} from '../../store/CustomerContext';
 import ModalDeleteCustomer from './ModalDeleteCustomer';
+import moment from 'moment';
 
 function getModalStyle() {
     return {
@@ -64,9 +65,7 @@ export default function CustomerEdit(props) {
     };
 
     React.useEffect(() => {
-      setCustomer(
-      customerState.selectedCustomer
-      )
+      setCustomer(customerState.selectedCustomer);
       }, [customerState])
 
     React.useEffect( ()=>{
@@ -77,11 +76,10 @@ export default function CustomerEdit(props) {
               headers: { 'Authorization' : 'Bearer ' + authState.token},
               data:customer
           })
+
           .then((res) => {
               console.log(res)
               customerDispatch({type:'selected',payload:res.data})
-              props.action()
-
           })
           .catch((err)=>{
               console.log(err, props.id)
@@ -95,6 +93,8 @@ export default function CustomerEdit(props) {
           
       }
   }, [submit, customer])
+
+  console.log(customer.date);
 return (
     <div>
       <Button variant="contained" color="primary" type="button" onClick={handleOpen}>
@@ -127,7 +127,7 @@ return (
         <TextField id="state" label="state" className={classes.textField} variant="outlined" value={customer.state || ''}
         onChange={e => setCustomer({...customer, state: e.target.value})} 
         />
-        <TextField id="date" label="date" className={classes.textField} variant="outlined" value={customer.date || ''}
+        <TextField id="date" label="date" type="datetime-local" defaultValue={moment(customer.date).format("yyyy-MM-DDThh:mm") || ''} className={classes.textField} InputLabelProps={{shrink: true,}}
         onChange={e => setCustomer({...customer, date: e.target.value})} 
         />
         

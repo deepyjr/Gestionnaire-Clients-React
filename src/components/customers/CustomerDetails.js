@@ -9,6 +9,7 @@ const CustomerDetail = ({id}) => {
     const { authState } = React.useContext(AuthContext);
     const [refreshDetails,setRefreshDetails] = React.useState(true);
     const { customerState } = React.useContext(CustomerContext);
+    const { customerDispatch } = React.useContext(CustomerContext);
 
     React.useEffect( ()=>{
         const getCustomerDetail = () => {
@@ -17,8 +18,12 @@ const CustomerDetail = ({id}) => {
                 url:'http://emt.arcplex.fr:4000/customers/'+id,
                 headers: { 'Authorization' : 'Bearer ' + authState.token}
             })
+            .then((res) => {
+                customerDispatch({type:'selected',payload:res.data})
+            })
             .catch((err)=>{
                 console.log(err)
+                
             })
         }
     
