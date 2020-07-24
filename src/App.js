@@ -9,6 +9,11 @@ import {AuthContext} from './store/AuthContext';
 
 function App() {
   const {authState} = React.useContext(AuthContext)
+  connexion = false
+  const Check = (connexion) => {
+    connexion = !connexion;
+  }
+
   return (
     <div>
       {authState.token !==null ?

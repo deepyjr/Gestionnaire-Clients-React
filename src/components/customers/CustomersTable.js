@@ -21,6 +21,7 @@ React.useEffect( ()=>{
         })
         .then((res) => {
             setCustomers(res.data)
+            setCustomers()
         })
         .catch((err)=>{
             console.log(err)

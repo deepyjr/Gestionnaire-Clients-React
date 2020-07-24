@@ -71,7 +71,7 @@ export default function CustomerEdit(props) {
             console.log(err, props.id)
         })
     }
-
+    
     if(redirect) {
         return <Redirect to='/customers'/>
     }
