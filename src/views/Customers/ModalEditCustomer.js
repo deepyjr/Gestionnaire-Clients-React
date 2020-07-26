@@ -55,7 +55,7 @@ export default function CustomerEdit(props) {
     const [submit, setSubmit ] = React.useState(false);
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
-    // console.log(customer);
+
     const handleOpen = () => {
       setOpen(true);
     };

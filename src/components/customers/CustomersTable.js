@@ -21,7 +21,7 @@ React.useEffect( ()=>{
         })
         .then((res) => {
             setCustomers(res.data)
-            setCustomers()
+            console.log(res, 'table')
         })
         .catch((err)=>{
             console.log(err)

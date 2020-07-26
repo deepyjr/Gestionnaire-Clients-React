@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
   const { authDispatch } = React.useContext(AuthContext);
   const classes = useStyles();
   const [user, setUser ] = React.useState({
