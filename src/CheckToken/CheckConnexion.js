@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import Layout from '../layout/Layout';
 import Login from '../views/Login'
 import LoadingPage from '../Loading/loading'
-import '../Loading/loading.gif'
 
 
 export default function CheckConnexion()
